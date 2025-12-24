@@ -35,7 +35,7 @@ void main() {
             smallUV.y = (texcoord.y - (1.0 - 2.0 * scale)) / scale;
             
             vec3 norm = texture(colortex5, smallUV).rgb;
-            color = norm * 2.0 - 1.0;
+            color = norm;
         }
         
         // Motion

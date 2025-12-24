@@ -30,7 +30,7 @@ void main() {
 	}
 	brdf = color;
 
-	vec3 N = normalize(worldNormal) * 0.5 + 0.5;
+	vec3 N = normalize(worldNormal);
 	normal = vec4(N, 1.0);
 
 	vec3 currentNDC = currentClipPos.xyz / currentClipPos.w;
