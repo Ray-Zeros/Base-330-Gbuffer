@@ -1,5 +1,7 @@
 #version 330 compatibility
 
+#include "settings.glsl"
+
 uniform int renderStage;
 uniform float viewHeight;
 uniform float viewWidth;
@@ -29,6 +31,15 @@ vec3 screenToView(vec3 screenPos) {
 layout(location = 0) out vec4 color;
 
 void main() {
+
+	if (SUPER_RES_SCALE > 1.001) {
+		float scale = 1.0 / float(SUPER_RES_SCALE);
+		vec2 renderLimit = vec2(viewWidth, viewHeight) * scale;
+		if (gl_FragCoord.x > renderLimit.x || gl_FragCoord.y > renderLimit.y) {
+            discard; 
+        }
+	}
+
 	if (renderStage == MC_RENDER_STAGE_STARS) {
 		color = glcolor;
 	} else {

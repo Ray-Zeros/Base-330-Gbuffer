@@ -1,5 +1,7 @@
 #version 330 compatibility
 
+#include "settings.glsl"
+
 uniform sampler2D lightmap;
 uniform sampler2D gtexture;
 
@@ -22,6 +24,15 @@ layout(location = 2) out vec4 normal;
 layout(location = 3) out vec4 motion;
 
 void main() {
+
+	if (SUPER_RES_SCALE > 1.001) {
+		float scale = 1.0 / float(SUPER_RES_SCALE);
+		vec2 renderLimit = vec2(viewWidth, viewHeight) * scale;
+		if (gl_FragCoord.x > renderLimit.x || gl_FragCoord.y > renderLimit.y) {
+            discard; 
+        }
+	}
+
 	color = texture(gtexture, texcoord) * glcolor;
 	color *= texture(lightmap, lmcoord);
 	if (color.a < alphaTestRef) {
